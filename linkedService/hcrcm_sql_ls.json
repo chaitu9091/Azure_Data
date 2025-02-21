@@ -1,0 +1,22 @@
+{
+	"name": "hcrcm_sql_ls",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"db_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "healthc.database.windows.net",
+			"database": "@{linkedService().db_name}",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "chayazurepro",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDQyNzJDN0RGLTNDNzgtNDcwNC05RTdGLTI2RUFDRjIyOTQ4Q182ZjAzMDAxNC05OGZhLTRkYzUtOWQyMi0yZGM0M2Q2NzY4ODUiDQp9"
+		}
+	}
+}
