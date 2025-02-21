@@ -1,5 +1,5 @@
 {
-	"name": "generic_sql_ds_1",
+	"name": "generic_sql_ds",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "hcrcm_sql_ls",
