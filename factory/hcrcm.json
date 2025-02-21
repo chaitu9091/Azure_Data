@@ -1,0 +1,9 @@
+{
+	"name": "hcrcm",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "30056614-9b14-4524-884f-fa007632f36c",
+		"tenantId": "dd246e4a-5434-4e15-8ae3-91ad9797b209"
+	}
+}
