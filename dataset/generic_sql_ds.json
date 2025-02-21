@@ -1,5 +1,5 @@
 {
-	"name": "SqlServerTable1",
+	"name": "generic_sql_ds",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "hcsqlserverls",
