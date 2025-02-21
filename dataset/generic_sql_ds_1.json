@@ -1,0 +1,30 @@
+{
+	"name": "generic_sql_ds_1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "hcrcm_sql_ls",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"db_name": "@dat"
+			}
+		},
+		"parameters": {
+			"db_name": {
+				"type": "string"
+			},
+			"schema_name": {
+				"type": "string"
+			},
+			"table_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "@dataset().schema_name",
+			"table": "@dataset().table_name"
+		}
+	}
+}
