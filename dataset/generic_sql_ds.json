@@ -1,13 +1,6 @@
 {
 	"name": "generic_sql_ds",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "hcsqlserverls",
-			"type": "LinkedServiceReference",
-			"parameters": {
-				"db_name": "@data"
-			}
-		},
 		"parameters": {
 			"db_name": {
 				"type": "string"
