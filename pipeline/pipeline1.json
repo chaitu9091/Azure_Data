@@ -13,20 +13,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "container",
-						"value": "configs"
-					},
-					{
-						"name": "file_path",
-						"value": "emr"
-					},
-					{
-						"name": "file_name",
-						"value": "load_config.csv"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"source": {
 						"type": "DelimitedTextSource",
@@ -49,6 +36,138 @@
 						}
 					},
 					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"activities": [
+						{
+							"name": "File_exist",
+							"type": "GetMetadata",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "generic_adls_flat_file_ds",
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "bronze",
+										"file_path": {
+											"value": "@iteam().targetpath\n",
+											"type": "Expression"
+										},
+										"file_name": {
+											"value": "@split(item().tablename,'.')[1]",
+											"type": "Expression"
+										}
+									}
+								},
+								"fieldList": [
+									"exists"
+								],
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							}
+						},
+						{
+							"name": "If Condition1",
+							"type": "IfCondition",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"ifTrueActivities": [
+									{
+										"name": "Archive",
+										"type": "Copy",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "ParquetSource",
+												"storeSettings": {
+													"type": "AzureBlobFSReadSettings",
+													"recursive": true,
+													"enablePartitionDiscovery": false
+												},
+												"formatSettings": {
+													"type": "ParquetReadSettings"
+												}
+											},
+											"sink": {
+												"type": "ParquetSink",
+												"storeSettings": {
+													"type": "AzureBlobFSWriteSettings"
+												},
+												"formatSettings": {
+													"type": "ParquetWriteSettings"
+												}
+											},
+											"enableStaging": false,
+											"translator": {
+												"type": "TabularTranslator",
+												"typeConversion": true,
+												"typeConversionSettings": {
+													"allowDataTruncation": true,
+													"treatBooleanAsNumber": false
+												}
+											}
+										},
+										"inputs": [
+											{
+												"referenceName": "generic_adls_parquet_ds",
+												"type": "DatasetReference",
+												"parameters": {
+													"container": "bronze",
+													"file_path": {
+														"value": "@item().targetpath",
+														"type": "Expression"
+													},
+													"file_name": {
+														"value": "@split(item().tablename,'.')[1]",
+														"type": "Expression"
+													}
+												}
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "generic_adls_parquet_ds",
+												"type": "DatasetReference",
+												"parameters": {
+													"container": "bronze",
+													"file_path": "@concat(item().targetpath,'/archive/',formatDateTime(utcNow(),'yyyy'),'/',formatDateTime(utcNow(),'%M'),'/', formatDateTime(utcNow(), '%D'))",
+													"file_name": "@split(item().tablename,'.')[1]"
+												}
+											}
+										]
+									}
+								]
+							}
+						}
+					]
 				}
 			}
 		],
