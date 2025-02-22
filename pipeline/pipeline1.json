@@ -41,7 +41,12 @@
 					},
 					"dataset": {
 						"referenceName": "generic_adls_flat_file_ds",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "configs",
+							"file_path": "EMR",
+							"file_name": "load_config.csv"
+						}
 					},
 					"firstRowOnly": false
 				}
